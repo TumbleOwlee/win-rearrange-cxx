@@ -19,6 +19,6 @@ message("Build type: ${CMAKE_BUILD_TYPE}")
 set(EXE "win-rearrange-cxx")
 # Add executable
 add_executable(${EXE} "src/main.cxx" "src/XSystem.cxx" "src/XWindow.cxx" "src/Handler.cxx" "src/Config.cxx" "src/Command.cxx")
-target_include_directories(${EXE} PUBLIC ${CMAKE_SOURCE_DIR}/incl)
+target_include_directories(${EXE} PUBLIC ${CMAKE_SOURCE_DIR}/incl ${CMAKE_SOURCE_DIR}/deps/cereal/include)
 target_link_libraries(${EXE} X11 pthread)
 
