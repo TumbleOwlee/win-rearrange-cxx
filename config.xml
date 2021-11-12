@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cereal>
+  <command_definitions size="dynamic">
+    <value0>
+      <path>/usr/bin</path>
+      <command>firefox</command>
+    </value0>
+    <value1>
+      <path>/usr/bin</path>
+      <command>okular</command>
+    </value1>
+  </command_definitions>
+  <profiles size="dynamic">
+    <value0>
+      <name>default</name>
+      <rules size="dynamic">
+        <value0>
+          <regex>.*irefox.*</regex>
+          <priority>20</priority>
+          <left>100</left>
+          <top>100</top>
+          <right>2000</right>
+          <bottom>1400</bottom>
+        </value0>
+        <value0>
+          <regex>.*kular.*</regex>
+          <priority>10</priority>
+          <left>300</left>
+          <top>300</top>
+          <right>900</right>
+          <bottom>900</bottom>
+        </value0>
+      </rules>
+    </value0>
+  </profiles>
+</cereal>
+
