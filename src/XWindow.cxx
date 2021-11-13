@@ -2,9 +2,8 @@
 #include "XSystem.hxx"
 #include "utils.hxx"
 
-XWindow::XWindow(XSystem& system, Window root, Window window, std::string name)
+XWindow::XWindow(XSystem& system, Window window, std::string name)
   : m_system(system)
-  , m_root(root)
   , m_window(window)
   , m_name(name)
 {

@@ -1,6 +1,7 @@
 #ifndef HXX_XWINDOW
 #define HXX_XWINDOW
 
+#ifdef __unix__
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <string>
@@ -11,7 +12,7 @@ class XSystem;
 class XWindow
 {
   public:
-    XWindow(XSystem& system, Window root, Window window, std::string name);
+    XWindow(XSystem& system, Window window, std::string name);
 
     std::string getName();
      
@@ -21,9 +22,10 @@ class XWindow
 
   private:
     XSystem& m_system;
-    Window m_root;
     Window m_window;
     std::string m_name;
 };
+
+#endif
 
 #endif

@@ -1,12 +1,9 @@
 #include <iostream>
-#include <mutex>
-#include <atomic>
 #ifdef __unix__
 #include <unistd.h>
 #endif
 #include "Handler.hxx"
 #include "Config.hxx"
-#include "Command.hxx"
 
 #ifdef __unix__
 #define ISATTY(X) isatty(X)

@@ -52,7 +52,7 @@ void XSystem::traverseWindowStack(std::vector<XWindow>& outStack, Window entry)
         auto name = std::string(reinterpret_cast<const char*>(prop.value), prop.nitems);
         if (!name.empty())
         {
-          outStack.emplace_back(XWindow(*this, root, children[idx], name));
+          outStack.emplace_back(*this, children[idx], name);
         }
       }
       traverseWindowStack(outStack, children[idx]);
