@@ -1,10 +1,17 @@
 #include "Handler.hxx"
-#include "XSystem.hxx"
-#include "XWindow.hxx"
-#include <functional>
-#include <regex>
 #include "utils.hxx"
 #include "Command.hxx"
+
+#include <functional>
+#include <regex>
+
+#ifdef __unix__
+#include "XSystem.hxx"
+#include "XWindow.hxx"
+#else
+#include "WinSystem.hxx"
+#include "WinWindow.hxx"
+#endif
 
 Handler::Handler(Config& config)
   : m_stop(false)
@@ -22,11 +29,7 @@ void Handler::start()
     cmd->run();
     m_commands.push_back(cmd);
   }
-#ifdef __unix__
-  m_thread.reset(new std::thread(std::function<void()>(std::bind(&Handler::runUnix, this))));
-#else
-  m_thread.reset(new std::thread(std::function<void()>(std::bind(&Handler::runWin32, this))));
-#endif
+  m_thread.reset(new std::thread(std::function<void()>(std::bind(&Handler::run, this))));
 }
 
 void Handler::stop()
@@ -46,19 +49,24 @@ void Handler::stop()
   (*m_thread).join();
 }
 
-#ifdef __unix__
-void Handler::runUnix()
+void Handler::run()
 {
   // Create basic system
+#ifdef __unix__
   XSystem system;
+#else
+  WinSystem system;
+#endif
   // Retrieve rules
   auto rules = m_config.getRules("default");
-  // Start commands
-  std::vector<Command*> startedCmds;
   // Loop until stopped
   while(!m_stop) 
   {
+#ifdef __unix__
     std::vector<XWindow*> windows;
+#else
+    std::vector<WinWindow*> windows;
+#endif
     auto stack = system.getWindowStack();
     for (auto rule = rules.begin(); rule != rules.end(); ++rule)
     {
@@ -88,9 +96,3 @@ void Handler::runUnix()
     std::this_thread::sleep_for(std::chrono::seconds(3));
   }
 }
-#else
-void Handler::runWin32()
-{
-
-}
-#endif

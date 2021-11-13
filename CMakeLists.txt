@@ -18,7 +18,10 @@ message("Build type: ${CMAKE_BUILD_TYPE}")
 # Set publisher name 
 set(EXE "win-rearrange-cxx")
 # Add executable
-add_executable(${EXE} "src/main.cxx" "src/XSystem.cxx" "src/XWindow.cxx" "src/Handler.cxx" "src/Config.cxx" "src/Command.cxx")
+add_executable(${EXE} "src/main.cxx" "src/WinSystem.cxx" "src/XSystem.cxx" "src/WinWindow.cxx" "src/XWindow.cxx" "src/Handler.cxx" "src/Config.cxx" "src/Command.cxx")
 target_include_directories(${EXE} PUBLIC ${CMAKE_SOURCE_DIR}/incl ${CMAKE_SOURCE_DIR}/deps/cereal/include)
+# Link libraries
+if (UNIX)
 target_link_libraries(${EXE} X11 pthread)
+endif()
 

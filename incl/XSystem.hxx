@@ -1,6 +1,8 @@
 #ifndef HXX_XSYSTEM
 #define HXX_XSYSTEM
 
+#ifdef __unix__
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <vector>
@@ -27,5 +29,7 @@ private:
 
    void traverseWindowStack(std::vector<XWindow>& outStack, Window entry);
 };
+
+#endif
 
 #endif

@@ -1,9 +1,10 @@
 #include "Config.hxx"
+#include "utils.hxx"
+
 #include <iostream>
 #include <fstream>
 #include <ostream>
 #include <algorithm>
-#include "utils.hxx"
 
 Config::Config()
 {

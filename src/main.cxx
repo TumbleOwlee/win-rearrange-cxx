@@ -1,20 +1,24 @@
-#include <iostream>
-#ifdef __unix__
-#include <unistd.h>
-#endif
 #include "Handler.hxx"
 #include "Config.hxx"
 
+#include <iostream>
+
 #ifdef __unix__
+#include <unistd.h>
 #define ISATTY(X) isatty(X)
 #else
+#include <io.h>
 #define ISATTY(X) _isatty(X)
 #endif
 
 int main(int argc, char** argv) 
 {
   // Load config from file
-  Config config = Config::loadFromFile("config.xml"); 
+  #ifdef __unix__
+  Config config = Config::loadFromFile("unix_config.xml"); 
+  #else
+  Config config = Config::loadFromFile("win_config.xml"); 
+  #endif
   // Initialize handler for processing
   Handler handle(config);
   handle.start();

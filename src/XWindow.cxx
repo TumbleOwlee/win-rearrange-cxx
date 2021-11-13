@@ -1,3 +1,4 @@
+#ifdef __unix__
 #include "XWindow.hxx"
 #include "XSystem.hxx"
 #include "utils.hxx"
@@ -32,3 +33,4 @@ void XWindow::raise()
   XSendEvent(m_system.getDisplay(), m_system.getRoot(), false, SubstructureNotifyMask | SubstructureRedirectMask, &event);
   XFlush(m_system.getDisplay());
 }
+#endif

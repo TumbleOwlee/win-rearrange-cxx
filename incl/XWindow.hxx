@@ -2,6 +2,7 @@
 #define HXX_XWINDOW
 
 #ifdef __unix__
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <string>

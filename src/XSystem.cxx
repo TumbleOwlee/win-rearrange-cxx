@@ -1,7 +1,9 @@
+#ifdef __unix__
 #include "XSystem.hxx"
 #include "XWindow.hxx"
-#include <string>
 #include "utils.hxx"
+
+#include <string>
 
 XSystem::XSystem() 
   : m_display(XOpenDisplay(nullptr))
@@ -59,4 +61,4 @@ void XSystem::traverseWindowStack(std::vector<XWindow>& outStack, Window entry)
     }
   }
 }
-
+#endif

@@ -1,10 +1,11 @@
 #ifndef HXX_HANDLER
 #define HXX_HANDLER
 
-#include <atomic>
-#include <thread>
 #include "Config.hxx"
 #include "Command.hxx"
+
+#include <atomic>
+#include <thread>
 
 class Handler 
 {
@@ -21,11 +22,7 @@ class Handler
     std::unique_ptr<std::thread> m_thread;
     std::vector<Command*> m_commands;
 
-#ifdef __unix__
-    void runUnix();
-#else
-    void runWin32();
-#endif
+    void run();
 };
 
 #endif
