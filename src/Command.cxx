@@ -63,6 +63,8 @@ void Command::kill()
 {
 #ifdef __unix__
   ::kill(m_pid, SIGKILL);
+  int status;
+  waitpid(m_pid, &status, 0);
 #else
   TerminateProcess(m_pinfo.hProcess, 1);
   CloseHandle(m_pinfo.hProcess);
