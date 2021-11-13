@@ -42,8 +42,8 @@ void Handler::stop()
     if((*iter)->isActive())
     {
       (*iter)->kill();
-      delete (*iter);
     }
+    delete (*iter);
   }
   // Wait for thread finish
   (*m_thread).join();
@@ -70,6 +70,7 @@ void Handler::run()
     auto stack = system.getWindowStack();
     for (auto rule = rules.begin(); rule != rules.end(); ++rule)
     {
+      bool applied = false;
       for (auto iter = stack.begin(); iter != stack.end(); ++iter)
       {
         if (std::find(windows.begin(), windows.end(), &(*iter)) != windows.end())
@@ -84,7 +85,12 @@ void Handler::run()
           // Move window
           (*iter).moveAndResize((*rule).left, (*rule).top, (*rule).right - (*rule).left, (*rule).bottom - (*rule).top);
           windows.push_back(&(*iter));
+          applied = true;
         }
+      }
+      if (!applied)
+      {
+        LOG_ERROR("Rule '" << (*rule).regex << "' not applied. No window found.");
       }
     }
     // Restack windows
@@ -93,6 +99,6 @@ void Handler::run()
       (*(iter - 1))->raise();
     }
     // Sleep 
-    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::this_thread::sleep_for(std::chrono::seconds(10));
   }
 }

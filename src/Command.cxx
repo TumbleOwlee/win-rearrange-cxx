@@ -33,9 +33,9 @@ void Command::run()
   m_pid = fork();
   if (m_pid == 0)
   {
-    if(execlp((m_path + "\\" + m_command).c_str(), m_command.c_str(), NULL) < 0)
+    if(execlp((m_path + "/" + m_command).c_str(), m_command.c_str(), NULL) < 0)
     {
-      LOG_ERROR("Starting " << m_path << "\\" << m_command << " failed.");
+      LOG_ERROR("Starting " << m_path << "/" << m_command << " failed.");
     }
   }
 #else
@@ -74,7 +74,7 @@ bool Command::isActive()
 {
 #ifdef __unix__
   int status = 0;
-  return waitpid(m_pid, &status, WNOHANG) > 0;
+  return waitpid(m_pid, &status, WNOHANG) >= 0;
 #else
   return WaitForSingleObject(m_pinfo.hProcess, 0) == WAIT_TIMEOUT;
 #endif
