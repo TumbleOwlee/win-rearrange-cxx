@@ -10,9 +10,9 @@ class WinWindow;
 class WinSystem 
 {
 public:
-   WinSystem();
+    WinSystem();
 
-   std::vector<WinWindow> getWindowStack();
+    std::vector<WinWindow> getWindowStack();
 };
 
 #endif

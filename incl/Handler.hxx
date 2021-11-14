@@ -9,14 +9,14 @@
 
 class Handler 
 {
-  public:
+public:
     Handler(Config& config);
 
     void start();
 
     void stop();
-  
-  private:
+
+private:
     std::atomic_bool m_stop;
     Config& m_config;
     std::unique_ptr<std::thread> m_thread;

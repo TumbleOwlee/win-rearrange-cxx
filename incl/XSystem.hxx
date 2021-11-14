@@ -12,22 +12,22 @@ class XWindow;
 class XSystem 
 {
 public:
-   XSystem();
+    XSystem();
 
-   Display* getDisplay();
+    Display* getDisplay();
 
-   int getScreen();
+    int getScreen();
 
-   Window getRoot();
+    Window getRoot();
 
-   std::vector<XWindow> getWindowStack();
+    std::vector<XWindow> getWindowStack();
 
 private:
-   Display* m_display;
-   int m_screen;
-   Window m_root;
+    Display* m_display;
+    int m_screen;
+    Window m_root;
 
-   void traverseWindowStack(std::vector<XWindow>& outStack, Window entry);
+    void traverseWindowStack(std::vector<XWindow>& outStack, Window entry);
 };
 
 #endif

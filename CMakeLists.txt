@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project
 project(win-rearrange-cxx
-	VERSION 0.0.1
+    VERSION 0.0.1
     DESCRIPTION "Tool to rearrange windows automatically"
-	LANGUAGES C CXX)
-   
+    LANGUAGES C CXX)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set default to Debug
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-	set(CMAKE_BUILD_TYPE Debug)
+    set(CMAKE_BUILD_TYPE Debug)
 endif()
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
@@ -22,6 +22,6 @@ add_executable(${EXE} "src/main.cxx" "src/WinSystem.cxx" "src/XSystem.cxx" "src/
 target_include_directories(${EXE} PUBLIC ${CMAKE_SOURCE_DIR}/incl ${CMAKE_SOURCE_DIR}/deps/cereal/include)
 # Link libraries
 if (UNIX)
-target_link_libraries(${EXE} X11 pthread)
+    target_link_libraries(${EXE} X11 pthread)
 endif()
 

@@ -2,7 +2,7 @@
 #include "WinSystem.hxx"
 #include "WinWindow.hxx"
 #include "utils.hxx"
- 
+
 #include <string>
 #include <windows.h>
 #include <locale>

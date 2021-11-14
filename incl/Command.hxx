@@ -10,16 +10,16 @@
 
 class Command 
 {
-  public:
+public:
     Command(std::string path, std::string command);
 
     void run();
-     
+
     bool isActive();
-     
+
     void kill();
 
-  private:
+private:
     std::string m_path;
     std::string m_command;
 #ifdef __unix__
