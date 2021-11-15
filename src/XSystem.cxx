@@ -61,4 +61,25 @@ void XSystem::traverseWindowStack(std::vector<XWindow>& outStack, Window entry)
         }
     }
 }
+
+void XSystem::applyOrder(std::vector<XWindow*>& windows)
+{
+    if (!windows.empty())
+    {
+        for (auto iter = (windows.end() - 1); iter != windows.begin(); --iter)
+        {
+            auto handle = (*iter)->getHandle();
+            XEvent event;
+            event.type = ClientMessage;
+            event.xclient.display = m_display;
+            event.xclient.window = handle;
+            event.xclient.message_type = XInternAtom(m_display, "_NET_ACTIVE_WINDOW", true);
+            event.xclient.format = 32;
+            event.xclient.data.l[0] = 2L;
+            event.xclient.data.l[1] = CurrentTime;
+            XSendEvent(m_display, m_root, false, SubstructureNotifyMask | SubstructureRedirectMask, &event);
+            XFlush(m_display);
+        }
+    }
+}
 #endif

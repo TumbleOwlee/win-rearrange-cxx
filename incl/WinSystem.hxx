@@ -13,6 +13,8 @@ public:
     WinSystem();
 
     std::vector<WinWindow> getWindowStack();
+
+    void applyOrder(std::vector<XWindow*>& windows);
 };
 
 #endif

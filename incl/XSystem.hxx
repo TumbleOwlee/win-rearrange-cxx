@@ -22,6 +22,8 @@ public:
 
     std::vector<XWindow> getWindowStack();
 
+    void applyOrder(std::vector<XWindow*>& windows);
+
 private:
     Display* m_display;
     int m_screen;
