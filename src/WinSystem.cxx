@@ -40,4 +40,22 @@ std::vector<WinWindow> WinSystem::getWindowStack()
     return stack;
 }
 
+void WinSystem::applyOrder(std::vector<WinWindow*>& windows)
+{
+    HDWP hdwp = BeginDeferWindowPos(windows.size());
+    WinWindow* parent = nullptr;
+    for (auto iter = windows.begin(); iter != windows.end(); ++iter)
+    {
+        if (iter == windows.begin())
+        {
+            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), HWND_TOP, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
+        }
+        else 
+        {
+            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), parent->getHandle(), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
+        }
+        parent = (*iter);
+    }
+    EndDeferWindowPos(hdwp);
+}
 #endif

@@ -14,7 +14,7 @@ public:
 
     void moveAndResize(int x, int y, unsigned int width, unsigned int height);
 
-    void raise();
+    HWND getHandle();
 
 private:
     HWND m_window;

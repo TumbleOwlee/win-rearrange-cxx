@@ -94,10 +94,7 @@ void Handler::run()
             }
         }
         // Restack windows
-        for (auto iter = windows.end(); iter != windows.begin(); --iter)
-        {
-            (*(iter - 1))->raise();
-        }
+        system.applyOrder(windows);
         // Sleep 
         std::this_thread::sleep_for(std::chrono::seconds(10));
     }
