@@ -14,7 +14,7 @@ public:
 
     std::vector<WinWindow> getWindowStack();
 
-    void applyOrder(std::vector<XWindow*>& windows);
+    void applyOrder(std::vector<WinWindow*>& windows);
 };
 
 #endif
