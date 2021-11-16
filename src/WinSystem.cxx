@@ -48,11 +48,11 @@ void WinSystem::applyOrder(std::vector<WinWindow*>& windows)
     {
         if (iter == windows.begin())
         {
-            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), HWND_TOP, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
+            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), HWND_TOP, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE);
         }
         else 
         {
-            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), parent->getHandle(), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
+            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), parent->getHandle(), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE);
         }
         parent = (*iter);
     }
