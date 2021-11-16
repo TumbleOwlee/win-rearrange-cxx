@@ -41,7 +41,7 @@ int main(int argc, char** argv)
         else
         {
             // Sleep if non TTY
-            std::this_thread::sleep_for(std::chrono::seconds(5));
+            std::this_thread::sleep_for(std::chrono::hours(24));
         }
     }
 }
