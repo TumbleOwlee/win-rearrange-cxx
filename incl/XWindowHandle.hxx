@@ -8,21 +8,21 @@
 #include <string>
 #include <vector>
 
-class WindowManager;
+class WindowStack;
 
-class WindowData 
+class WindowHandle 
 {
 public:
-    WindowData(WindowManager& system, Window window, std::string name);
+    WindowHandle(WindowStack& stack, Window window, std::string name);
 
     std::string getName();
 
     void moveAndResize(int x, int y, unsigned int width, unsigned int height);
 
-    Window getHandle();
+    Window get();
 
 private:
-    WindowManager& m_system;
+    WindowStack& m_stack;
     Window m_window;
     std::string m_name;
 };

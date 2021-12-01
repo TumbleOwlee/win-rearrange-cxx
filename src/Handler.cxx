@@ -6,11 +6,11 @@
 #include <regex>
 
 #ifdef __unix__
-#include "XWindowManager.hxx"
-#include "XWindowData.hxx"
+#include "XWindowStack.hxx"
+#include "XWindowHandle.hxx"
 #else
-#include "WWindowManager.hxx"
-#include "WWindowData.hxx"
+#include "WWindowStack.hxx"
+#include "WWindowHandle.hxx"
 #endif
 
 Handler::Handler(Config& config)
@@ -52,14 +52,14 @@ void Handler::stop()
 void Handler::run()
 {
     // Create basic system
-    WindowManager manager;
+    WindowStack windowStack;
     // Retrieve rules
     auto rules = m_config.getRules("default");
     // Loop until stopped
     while(!m_stop) 
     {
-        std::vector<WindowData*> windows;
-        auto stack = manager.getWindowStack();
+        std::vector<WindowHandle*> windows;
+        auto stack = windowStack.getWindows();
         for (auto rule = rules.begin(); rule != rules.end(); ++rule)
         {
             bool applied = false;
@@ -86,7 +86,7 @@ void Handler::run()
             }
         }
         // Restack windows
-        manager.applyOrder(windows);
+        windowStack.applyOrder(windows);
         // Sleep 
         std::this_thread::sleep_for(std::chrono::seconds(10));
     }

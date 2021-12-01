@@ -1,40 +1,40 @@
 #ifdef __unix__
-#include "XWindowManager.hxx"
-#include "XWindowData.hxx"
+#include "XWindowStack.hxx"
+#include "XWindowHandle.hxx"
 #include "utils.hxx"
 
 #include <string>
 
-WindowManager::WindowManager() 
+WindowStack::WindowStack() 
     : m_display(XOpenDisplay(nullptr))
     , m_screen(XDefaultScreen(m_display))
     , m_root(XDefaultRootWindow(m_display))
 {
 }
 
-Display* WindowManager::getDisplay()
+Display* WindowStack::getDisplay()
 { 
     return m_display;
 }
 
-int WindowManager::getScreen()
+int WindowStack::getScreen()
 {
     return m_screen;
 }
 
-Window WindowManager::getRoot()
+Window WindowStack::getRoot()
 {
     return m_root;
 }
 
-std::vector<WindowData> WindowManager::getWindowStack()
+std::vector<WindowHandle> WindowStack::getWindows()
 {  
-    std::vector<WindowData> stack;
+    std::vector<WindowHandle> stack;
     traverseWindowStack(stack, m_root);
     return stack;
 }
 
-void WindowManager::traverseWindowStack(std::vector<WindowData>& outStack, Window entry)
+void WindowStack::traverseWindowStack(std::vector<WindowHandle>& outStack, Window entry)
 { 
     Window root, parent;
     Window* children;
@@ -62,13 +62,13 @@ void WindowManager::traverseWindowStack(std::vector<WindowData>& outStack, Windo
     }
 }
 
-void WindowManager::applyOrder(std::vector<WindowData*>& windows)
+void WindowStack::applyOrder(std::vector<WindowHandle*>& windows)
 {
     if (!windows.empty())
     {
         for (auto iter = (windows.end() - 1); iter != windows.begin(); --iter)
         {
-            auto handle = (*iter)->getHandle();
+            auto handle = (*iter)->get();
             XEvent event;
             event.type = ClientMessage;
             event.xclient.display = m_display;

@@ -6,16 +6,16 @@
 #include <Windows.h>
 #include <string>
 
-class WindowData 
+class WindowHandle
 {
 public:
-    WindowData(HWND window, std::string name);
+    WindowHandle(HWND window, std::string name);
 
     std::string getName();
 
     void moveAndResize(int x, int y, unsigned int width, unsigned int height);
 
-    HWND getHandle();
+    HWND get();
 
 private:
     HWND m_window;
