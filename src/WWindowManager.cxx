@@ -1,6 +1,6 @@
 #ifdef _WIN32
-#include "WinSystem.hxx"
-#include "WinWindow.hxx"
+#include "WWindowManager.hxx"
+#include "WWindowData.hxx"
 #include "utils.hxx"
 
 #include <string>
@@ -11,7 +11,7 @@
 BOOL CALLBACK enumerateWindowCallback(HWND hwnd, LPARAM lparam)
 {
     // Get passed stack pointer
-    std::vector<WinWindow>& pStack = *reinterpret_cast<std::vector<WinWindow>*>(lparam);
+    std::vector<WindowData>& pStack = *reinterpret_cast<std::vector<WindowData>*>(lparam);
     // Initialize buffer
     const DWORD MAX_TITLE_SIZE = 1024;
     char titleBuffer[MAX_TITLE_SIZE];
@@ -24,26 +24,26 @@ BOOL CALLBACK enumerateWindowCallback(HWND hwnd, LPARAM lparam)
     { 
         return TRUE;
     }
-    // Push back new WinWindow
+    // Push back new WindowData
     pStack.emplace_back(hwnd, title);
     return TRUE;
 }
 
-WinSystem::WinSystem()
+WindowManager::WindowManager()
 {
 }
 
-std::vector<WinWindow> WinSystem::getWindowStack()
+std::vector<WindowData> WindowManager::getWindowStack()
 {
-    std::vector<WinWindow> stack;
+    std::vector<WindowData> stack;
     EnumWindows(&enumerateWindowCallback, reinterpret_cast<LPARAM>(&stack));
     return stack;
 }
 
-void WinSystem::applyOrder(std::vector<WinWindow*>& windows)
+void WindowManager::applyOrder(std::vector<WindowData*>& windows)
 {
     HDWP hdwp = BeginDeferWindowPos(windows.size());
-    WinWindow* parent = nullptr;
+    WindowData* parent = nullptr;
     for (auto iter = windows.begin(); iter != windows.end(); ++iter)
     {
         if (iter == windows.begin())

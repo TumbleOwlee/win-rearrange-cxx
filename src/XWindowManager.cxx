@@ -1,40 +1,40 @@
 #ifdef __unix__
-#include "XSystem.hxx"
-#include "XWindow.hxx"
+#include "XWindowManager.hxx"
+#include "XWindowData.hxx"
 #include "utils.hxx"
 
 #include <string>
 
-XSystem::XSystem() 
+WindowManager::WindowManager() 
     : m_display(XOpenDisplay(nullptr))
     , m_screen(XDefaultScreen(m_display))
     , m_root(XDefaultRootWindow(m_display))
 {
 }
 
-Display* XSystem::getDisplay()
+Display* WindowManager::getDisplay()
 { 
     return m_display;
 }
 
-int XSystem::getScreen()
+int WindowManager::getScreen()
 {
     return m_screen;
 }
 
-Window XSystem::getRoot()
+Window WindowManager::getRoot()
 {
     return m_root;
 }
 
-std::vector<XWindow> XSystem::getWindowStack()
+std::vector<WindowData> WindowManager::getWindowStack()
 {  
-    std::vector<XWindow> stack;
+    std::vector<WindowData> stack;
     traverseWindowStack(stack, m_root);
     return stack;
 }
 
-void XSystem::traverseWindowStack(std::vector<XWindow>& outStack, Window entry)
+void WindowManager::traverseWindowStack(std::vector<WindowData>& outStack, Window entry)
 { 
     Window root, parent;
     Window* children;
@@ -62,7 +62,7 @@ void XSystem::traverseWindowStack(std::vector<XWindow>& outStack, Window entry)
     }
 }
 
-void XSystem::applyOrder(std::vector<XWindow*>& windows)
+void WindowManager::applyOrder(std::vector<WindowData*>& windows)
 {
     if (!windows.empty())
     {

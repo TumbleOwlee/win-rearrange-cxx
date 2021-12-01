@@ -8,12 +8,12 @@
 #include <string>
 #include <vector>
 
-class XSystem;
+class WindowManager;
 
-class XWindow
+class WindowData 
 {
 public:
-    XWindow(XSystem& system, Window window, std::string name);
+    WindowData(WindowManager& system, Window window, std::string name);
 
     std::string getName();
 
@@ -22,7 +22,7 @@ public:
     Window getHandle();
 
 private:
-    XSystem& m_system;
+    WindowManager& m_system;
     Window m_window;
     std::string m_name;
 };

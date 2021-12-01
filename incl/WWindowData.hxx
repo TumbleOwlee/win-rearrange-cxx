@@ -2,13 +2,14 @@
 #define HXX_WINWINDOW
 
 #ifdef _WIN32
+
 #include <Windows.h>
 #include <string>
 
-class WinWindow 
+class WindowData 
 {
 public:
-    WinWindow(HWND window, std::string name);
+    WindowData(HWND window, std::string name);
 
     std::string getName();
 
