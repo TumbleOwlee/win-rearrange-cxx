@@ -1,6 +1,6 @@
 #ifdef _WIN32
-#include "WinSystem.hxx"
-#include "WinWindow.hxx"
+#include "WWindowStack.hxx"
+#include "WWindowHandle.hxx"
 #include "utils.hxx"
 
 #include <string>
@@ -11,7 +11,7 @@
 BOOL CALLBACK enumerateWindowCallback(HWND hwnd, LPARAM lparam)
 {
     // Get passed stack pointer
-    std::vector<WinWindow>& pStack = *reinterpret_cast<std::vector<WinWindow>*>(lparam);
+    std::vector<WindowHandle>& pStack = *reinterpret_cast<std::vector<WindowHandle>*>(lparam);
     // Initialize buffer
     const DWORD MAX_TITLE_SIZE = 1024;
     char titleBuffer[MAX_TITLE_SIZE];
@@ -24,35 +24,35 @@ BOOL CALLBACK enumerateWindowCallback(HWND hwnd, LPARAM lparam)
     { 
         return TRUE;
     }
-    // Push back new WinWindow
+    // Push back new WindowHandle
     pStack.emplace_back(hwnd, title);
     return TRUE;
 }
 
-WinSystem::WinSystem()
+WindowStack::WindowStack()
 {
 }
 
-std::vector<WinWindow> WinSystem::getWindowStack()
+std::vector<WindowHandle> WindowStack::getWindows()
 {
-    std::vector<WinWindow> stack;
+    std::vector<WindowHandle> stack;
     EnumWindows(&enumerateWindowCallback, reinterpret_cast<LPARAM>(&stack));
     return stack;
 }
 
-void WinSystem::applyOrder(std::vector<WinWindow*>& windows)
+void WindowStack::applyOrder(std::vector<WindowHandle*>& windows)
 {
     HDWP hdwp = BeginDeferWindowPos(windows.size());
-    WinWindow* parent = nullptr;
+    WindowHandle* parent = nullptr;
     for (auto iter = windows.begin(); iter != windows.end(); ++iter)
     {
         if (iter == windows.begin())
         {
-            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), HWND_TOP, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE);
+            hdwp = DeferWindowPos(hdwp, (*iter)->get(), HWND_TOP, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE);
         }
         else 
         {
-            hdwp = DeferWindowPos(hdwp, (*iter)->getHandle(), parent->getHandle(), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE);
+            hdwp = DeferWindowPos(hdwp, (*iter)->get(), parent->get(), 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE);
         }
         parent = (*iter);
     }

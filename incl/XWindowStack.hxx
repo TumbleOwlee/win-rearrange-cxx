@@ -7,12 +7,12 @@
 #include <X11/Xutil.h>
 #include <vector>
 
-class XWindow;
+class WindowHandle;
 
-class XSystem 
+class WindowStack 
 {
 public:
-    XSystem();
+    WindowStack();
 
     Display* getDisplay();
 
@@ -20,16 +20,16 @@ public:
 
     Window getRoot();
 
-    std::vector<XWindow> getWindowStack();
+    std::vector<WindowHandle> getWindows();
 
-    void applyOrder(std::vector<XWindow*>& windows);
+    void applyOrder(std::vector<WindowHandle*>& windows);
 
 private:
     Display* m_display;
     int m_screen;
     Window m_root;
 
-    void traverseWindowStack(std::vector<XWindow>& outStack, Window entry);
+    void traverseWindowStack(std::vector<WindowHandle>& outStack, Window entry);
 };
 
 #endif

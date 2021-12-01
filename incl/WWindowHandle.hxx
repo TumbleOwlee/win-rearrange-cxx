@@ -2,19 +2,20 @@
 #define HXX_WINWINDOW
 
 #ifdef _WIN32
+
 #include <Windows.h>
 #include <string>
 
-class WinWindow 
+class WindowHandle
 {
 public:
-    WinWindow(HWND window, std::string name);
+    WindowHandle(HWND window, std::string name);
 
     std::string getName();
 
     void moveAndResize(int x, int y, unsigned int width, unsigned int height);
 
-    HWND getHandle();
+    HWND get();
 
 private:
     HWND m_window;

@@ -8,21 +8,21 @@
 #include <string>
 #include <vector>
 
-class XSystem;
+class WindowStack;
 
-class XWindow
+class WindowHandle 
 {
 public:
-    XWindow(XSystem& system, Window window, std::string name);
+    WindowHandle(WindowStack& stack, Window window, std::string name);
 
     std::string getName();
 
     void moveAndResize(int x, int y, unsigned int width, unsigned int height);
 
-    Window getHandle();
+    Window get();
 
 private:
-    XSystem& m_system;
+    WindowStack& m_stack;
     Window m_window;
     std::string m_name;
 };
