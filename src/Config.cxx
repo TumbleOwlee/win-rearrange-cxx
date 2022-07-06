@@ -26,6 +26,12 @@ void Config::load(std::string filename)
 {
     // Read XML
     std::ifstream is(filename, std::ifstream::in);
+    if (!is.is_open())
+    {
+        std::cerr << "ERROR: Could not open configuration file '" << filename << "'" << std::endl;
+        exit(-1);
+    }
+
     cereal::XMLInputArchive ar(is);
     ar(cereal::make_nvp("command_definitions", m_commands));
     ar(cereal::make_nvp("profiles", m_profiles));
